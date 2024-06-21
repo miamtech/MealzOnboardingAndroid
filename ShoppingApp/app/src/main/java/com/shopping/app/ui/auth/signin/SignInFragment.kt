@@ -86,9 +86,7 @@ class SignInFragment : Fragment() {
 
             userPref.setUsername(user.username!!)
             userPref.setEmail(user.email!!)
-
-            findNavController().navigate(R.id.action_authFragment_to_mainMenuFragment)
-
+            findNavController().navigate(R.id.action_authFragment_to_storeFragment)
         }
 
     }

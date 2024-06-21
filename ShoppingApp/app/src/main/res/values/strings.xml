@@ -45,6 +45,7 @@
 
     <!-- Profile -->
     <string name="sign_out">SIGN OUT</string>
+    <string name="change_store">CHANGE STORE</string>
     <string name="sign_out_message">Are you sure want to sign out of your account?</string>
     <string name="continue_">CONTINUE</string>
     <string name="cancel">Cancel</string>

@@ -11,6 +11,9 @@
             name="username"
             type="String" />
         <variable
+            name="storeName"
+            type="String" />
+        <variable
             name="profileFragment"
             type="com.shopping.app.ui.main.profile.ProfileFragment" />
     </data>
@@ -69,6 +72,28 @@
                 android:layout_marginTop="20dp"
                 android:onClick="@{v -> profileFragment.signOutDialog()}"/>
 
+            <TextView
+                android:id="@+id/tvStoreName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/main_color"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:text="@{storeName}"/>
+
+            <Button
+                android:id="@+id/btnChangeStore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_signout_button"
+                android:text="@string/change_store"
+                android:textColor="@color/white"
+                app:backgroundTint="@null"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:onClick="@{v -> profileFragment.changeStore()}"/>
         </LinearLayout>
 
     </ScrollView>

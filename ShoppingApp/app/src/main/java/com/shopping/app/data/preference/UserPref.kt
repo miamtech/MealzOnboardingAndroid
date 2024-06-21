@@ -16,6 +16,8 @@ class UserPref(var context: Context) {
         val Context.ds : DataStore<Preferences> by preferencesDataStore(Constants.DATA_STORE_USER)
         val KEY_USERNAME = stringPreferencesKey("USERNAME")
         val KEY_EMAIL = stringPreferencesKey("EMAIL")
+        val KEY_STORE = stringPreferencesKey("STORE_ID")
+        val KEY_STORE_NAME = stringPreferencesKey("STORE_NAME")
         val KEY_IS_FIRST_USAGE = booleanPreferencesKey("IS_FIRST_USAGE")
     }
 
@@ -23,6 +25,27 @@ class UserPref(var context: Context) {
         context.ds.edit {
             it[KEY_USERNAME] = username
         }
+    }
+
+    suspend fun setStoreId(storeId:String){
+        context.ds.edit {
+            it[KEY_STORE] = storeId
+        }
+    }
+
+    suspend fun getStoreId() :String{
+        val p = context.ds.data.first()
+        return p[KEY_STORE] ?: "464"
+    }
+ suspend fun setStoreName(storeName:String){
+        context.ds.edit {
+            it[KEY_STORE_NAME] = storeName
+        }
+    }
+
+    suspend fun getStoreName() :String{
+        val p = context.ds.data.first()
+        return p[KEY_STORE_NAME] ?: ""
     }
 
     suspend fun getUsername():String{

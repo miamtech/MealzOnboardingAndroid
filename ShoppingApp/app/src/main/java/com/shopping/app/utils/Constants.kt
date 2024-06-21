@@ -2,7 +2,8 @@ package com.shopping.app.utils
 
 object Constants {
 
-    const val BASE_URL = "https://fakestoreapi.com/"
+    const val BASE_URL = "https://api.miam.tech/api/v1/"
+    const val SUPPLIER_ID = 8
 
     const val DATABASE_USERS_TABLE = "users"
     const val DATABASE_BASKET_TABLE = "basket"

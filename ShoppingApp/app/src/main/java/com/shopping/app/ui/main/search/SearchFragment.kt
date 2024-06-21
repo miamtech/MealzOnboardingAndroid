@@ -29,6 +29,7 @@ class SearchFragment : Fragment(), CategoryClickListener, SearchView.OnQueryText
     private lateinit var loadingProgressBar: LoadingProgressBar
     private val viewModel by viewModels<SearchViewModel> {
         SearchViewModelFactory(
+            requireContext(),
             SearchRepositoryImpl(
                 ApiClient.getApiService()
             )
@@ -112,13 +113,9 @@ class SearchFragment : Fragment(), CategoryClickListener, SearchView.OnQueryText
     }
 
     private fun searchQuery(query:String?){
-
         if(query != null && query.length > 2){
             viewModel.searchProducts(true, query.lowercase())
-        }else{
-            viewModel.searchProducts()
         }
-
     }
 
     override fun onClickCategory(category: CategoryModel) {

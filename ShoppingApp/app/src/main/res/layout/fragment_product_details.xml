@@ -2,9 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <data>
-
         <variable
             name="dataHolder"
             type="com.shopping.app.data.model.Product" />
@@ -83,7 +81,7 @@
                             android:progressTint="@color/rating_bar_color"
                             android:progressBackgroundTint="@color/gray"
                             android:secondaryProgressTint="@color/rating_bar_color"
-                            android:rating="@{dataHolder.rating.rate.floatValue()}"
+                            android:rating="@{dataHolder.rating.floatRate}"
                             android:stepSize="0.1"
                             style="?android:attr/ratingBarStyleSmall" />
 
@@ -95,7 +93,7 @@
                             android:textColor="@color/black_secondary"
                             android:textSize="13sp"
                             android:layout_marginStart="5dp"
-                            android:text="@{dataHolder.rating.rate.toString()}"/>
+                            android:text="@{dataHolder.rating.stringRate}"/>
 
                         <TextView
                             android:id="@+id/tvRatingCount"
@@ -105,7 +103,7 @@
                             android:textColor="@color/black_secondary"
                             android:textSize="13sp"
                             android:layout_marginStart="10dp"
-                            android:text="@{@string/rating_count(dataHolder.rating.count.toString())}"/>
+                            android:text="@{@string/rating_count(dataHolder.rating.stringCount)}"/>
 
                     </LinearLayout>
 

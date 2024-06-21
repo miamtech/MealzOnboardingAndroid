@@ -35,10 +35,9 @@ class ProfileFragment : Fragment() {
 
         val userPref = UserPref(requireContext())
         CoroutineScope(Dispatchers.Main).launch {
-
             bnd.username = userPref.getUsername()
             bnd.email = userPref.getEmail()
-
+            bnd.storeName = userPref.getStoreName()
         }
 
     }
@@ -55,6 +54,14 @@ class ProfileFragment : Fragment() {
             }
             .show()
 
+    }
+
+    fun changeStore() {
+        val navHostFragment =
+            activity?.supportFragmentManager?.findFragmentById(R.id.fragmentContainerView)
+                    as NavHostFragment
+        val mNavController = navHostFragment.navController
+        mNavController.navigate(R.id.action_mainMenuFragment_to_storeFragment)
     }
 
     private fun signOut(){

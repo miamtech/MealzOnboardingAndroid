@@ -19,4 +19,6 @@ interface BasketRepository {
 
     fun updateProductsPiece(productBasket: ProductBasket): Task<Void>
 
+    fun clearBasket(): Task<Void>
+
 }

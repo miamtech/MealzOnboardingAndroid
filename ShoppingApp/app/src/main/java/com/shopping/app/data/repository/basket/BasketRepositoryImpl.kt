@@ -59,4 +59,12 @@ class BasketRepositoryImpl : BasketRepository {
 
     }
 
+    override fun clearBasket(): Task<Void> {
+        return  Firebase.firestore.collection(Constants.DATABASE_BASKET_TABLE)
+            .document(FirebaseAuth.getInstance().uid!!)
+            .collection(Constants.DATABASE_PRODUCTS_TABLE)
+            .document()
+            .delete()
+    }
+
 }

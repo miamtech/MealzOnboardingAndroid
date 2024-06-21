@@ -56,9 +56,12 @@ class SplashFragment : Fragment() {
 
                 if(userPref.isFirstUsage()){
                     findNavController().navigate(R.id.action_splashFragment_to_onboardingFragment)
-                }else{
+                } else if (userPref.getStoreId().isNotEmpty()) {
                     findNavController().navigate(R.id.action_splashFragment_to_authFragment)
+                } else {
+                    findNavController().navigate(R.id.action_splashFragment_to_storeFragment)
                 }
+
 
             }
 

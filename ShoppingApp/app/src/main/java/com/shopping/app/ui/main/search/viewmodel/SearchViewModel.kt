@@ -1,17 +1,23 @@
 package com.shopping.app.ui.main.search.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shopping.app.data.model.CategoryModel
 import com.shopping.app.data.model.DataState
+import com.shopping.app.data.model.MealzProductWrapper
 import com.shopping.app.data.model.Product
+import com.shopping.app.data.preference.UserPref
 import com.shopping.app.data.repository.search.SearchRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SearchViewModel(private val searchRepository: SearchRepository) : ViewModel() {
+class SearchViewModel(private val context: Context, private val searchRepository: SearchRepository) : ViewModel() {
 
     private lateinit var productList:List<Product>
     private lateinit var categoryList:List<CategoryModel>
@@ -32,44 +38,25 @@ class SearchViewModel(private val searchRepository: SearchRepository) : ViewMode
     private fun getCategories(){
 
         _categoryLiveData.postValue(DataState.Loading())
-        searchRepository.getCategories().enqueue(object: Callback<List<String>>{
+        categoryList =
+            listOf( CategoryModel(
+                "Pomme",
+                false
+            ),CategoryModel(
+                "Steak",
+                false
+            ),CategoryModel(
+                "Mayonaise",
+                false
+            ))
 
-            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
-
-                if (response.isSuccessful) {
-
-                    response.body()?.let {
-
-                        categoryList = it.map {
-                            CategoryModel(
-                                it,
-                                false
-                            )
-                        }
-
-                        _categoryLiveData.postValue(DataState.Success(categoryList))
-
-                    } ?: kotlin.run {
-                        _categoryLiveData.postValue(DataState.Error("Data Empty"))
-                    }
-                } else {
-                    _categoryLiveData.postValue(DataState.Error(response.message()))
-                }
-
-            }
-
-            override fun onFailure(call: Call<List<String>>, t: Throwable) {
-                _categoryLiveData.postValue(DataState.Error(t.message.toString()))
-            }
-        })
-
+        _categoryLiveData.postValue(DataState.Success(categoryList))
     }
 
     fun getProductsByCategoryCheck(categoryModel: CategoryModel){
 
         val isSelectedCategory = categoryModel.isSelected
         categoryList.map {
-
             if(isSelectedCategory) it.isSelected = false
             else it.isSelected = it.categoryName == categoryModel.categoryName
 
@@ -85,60 +72,76 @@ class SearchViewModel(private val searchRepository: SearchRepository) : ViewMode
     private fun getProducts(){
 
         _searchLiveData.postValue(DataState.Loading())
-        searchRepository.getProducts().enqueue(object: Callback<List<Product>>{
 
-            override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+        CoroutineScope(Dispatchers.Main).launch {
 
-                if (response.isSuccessful) {
-                    response.body()?.let {
+            val storeId = UserPref(context).getStoreId()
 
-                        productList = it
-                        _searchLiveData.postValue(DataState.Success(productList))
+            searchRepository.getProducts(storeId).enqueue(object : Callback<MealzProductWrapper> {
 
-                    } ?: kotlin.run {
-                        _searchLiveData.postValue(DataState.Error("Data Empty"))
+                override fun onResponse(
+                    call: Call<MealzProductWrapper>,
+                    response: Response<MealzProductWrapper>
+                ) {
+
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            productList = it.data!!
+                            _searchLiveData.postValue(DataState.Success(productList))
+
+                        } ?: kotlin.run {
+                            _searchLiveData.postValue(DataState.Error("Data Empty"))
+                        }
+                    } else {
+                        _searchLiveData.postValue(DataState.Error(response.message()))
                     }
-                } else {
-                    _searchLiveData.postValue(DataState.Error(response.message()))
+
                 }
 
-            }
+                override fun onFailure(call: Call<MealzProductWrapper>, t: Throwable) {
+                    _searchLiveData.postValue(DataState.Error(t.message.toString()))
+                }
 
-            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                _searchLiveData.postValue(DataState.Error(t.message.toString()))
-            }
-
-        })
+            })
+        }
 
     }
 
     private fun getProductsByCategory(categoryModel: CategoryModel){
 
         _searchLiveData.postValue(DataState.Loading())
-        searchRepository.getProductsByCategory(categoryModel.categoryName).enqueue(object: Callback<List<Product>>{
+        CoroutineScope(Dispatchers.Main).launch {
 
-            override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+            val storeId = UserPref(context).getStoreId()
+            searchRepository.getProductsByCategory(categoryModel.categoryName,storeId)
+                .enqueue(object : Callback<MealzProductWrapper> {
 
-                if (response.isSuccessful) {
-                    response.body()?.let {
+                    override fun onResponse(
+                        call: Call<MealzProductWrapper>,
+                        response: Response<MealzProductWrapper>
+                    ) {
 
-                        productList = it
-                        _searchLiveData.postValue(DataState.Success(productList))
+                        if (response.isSuccessful) {
+                            response.body()?.let {
 
-                    } ?: kotlin.run {
-                        _searchLiveData.postValue(DataState.Error("Data Empty"))
+                                productList = it.data!!
+                                _searchLiveData.postValue(DataState.Success(productList))
+
+                            } ?: kotlin.run {
+                                _searchLiveData.postValue(DataState.Error("Data Empty"))
+                            }
+                        } else {
+                            _searchLiveData.postValue(DataState.Error(response.message()))
+                        }
+
                     }
-                } else {
-                    _searchLiveData.postValue(DataState.Error(response.message()))
-                }
 
-            }
+                    override fun onFailure(call: Call<MealzProductWrapper>, t: Throwable) {
+                        _searchLiveData.postValue(DataState.Error(t.message.toString()))
+                    }
 
-            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                _searchLiveData.postValue(DataState.Error(t.message.toString()))
-            }
-
-        })
+                })
+        }
 
     }
 
@@ -147,21 +150,36 @@ class SearchViewModel(private val searchRepository: SearchRepository) : ViewMode
         if(productList.isNotEmpty()){
 
             if(isSearch){
+                _searchLiveData.postValue(DataState.Loading())
 
-                val searchList = productList.filter {
-                    it.title!!.lowercase().contains(query) || it.description!!.lowercase().contains(query)
+                CoroutineScope(Dispatchers.Main).launch {
+                    val storeId = UserPref(context).getStoreId()
+                searchRepository.getProductsByCategory(storeId,query).enqueue(object: Callback<MealzProductWrapper>{
+
+                    override fun onResponse(call: Call<MealzProductWrapper>, response: Response<MealzProductWrapper>) {
+
+                        if (response.isSuccessful) {
+                            response.body()?.let {
+                                productList = it.data!!
+                                _searchLiveData.postValue(DataState.Success(productList))
+
+                            } ?: run {
+                                _searchLiveData.postValue(DataState.Error("Data Empty"))
+                            }
+                        } else {
+                            _searchLiveData.postValue(DataState.Error(response.message()))
+                        }
+                    }
+                    override fun onFailure(call: Call<MealzProductWrapper>, t: Throwable) {
+                        _searchLiveData.postValue(DataState.Error(t.message.toString()))
+                    }
+                })
                 }
-
-                _searchLiveData.postValue(DataState.Success(searchList))
-
-            }else{
+            } else {
                 _searchLiveData.postValue(DataState.Success(productList))
             }
-
         }else{
             getProducts()
         }
-
     }
-
 }

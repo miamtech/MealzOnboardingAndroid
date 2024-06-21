@@ -26,6 +26,7 @@ class ProductFragment : Fragment() {
     private lateinit var loadingProgressBar: LoadingProgressBar
     private val viewModel by viewModels<ProductViewModel> {
         ProductViewModelFactory(
+            requireContext(),
             ProductRepositoryImpl(
                 ApiClient.getApiService()
             )
@@ -65,9 +66,6 @@ class ProductFragment : Fragment() {
                     loadingProgressBar.show()
                 }
             }
-
         }
-
     }
-
 }
