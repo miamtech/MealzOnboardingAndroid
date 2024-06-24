@@ -7,20 +7,25 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 34
+    
 
     defaultConfig {
         applicationId "com.shopping.app"
         minSdk 21
-        targetSdk 32
+        targetSdk 34
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildFeatures {
         dataBinding true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.0"
     }
 
     buildTypes {
@@ -43,9 +48,28 @@ dependencies {
     def lifecycle_version = "2.2.0"
 
     /**
-     * TODO (Step 2): Add the mealz dependency
+     * Step 2: Add the mealz dependency
      * https://miamtech.github.io/mealz-documentation/docs/android/overview/installation
      */
+    implementation("ai.mealz.core:mealz-core:4.1.0-alpha")
+    implementation("ai.mealz.android:mealz-android:4.1.0-alpha")
+    implementation("io.ktor:ktor-client-android:2.2.3")
+    implementation("io.ktor:ktor-client-encoding:2.2.3")
+    implementation("io.ktor:ktor-client-content-negotiation:2.2.3")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.2.3")
+    implementation("io.ktor:ktor-client-logging:2.2.3")
+    implementation("androidx.compose.ui:ui:1.6.7")
+    implementation("androidx.compose.material:material:1.6.7")
+    implementation("androidx.compose.ui:ui-tooling:1.6.7")
+    implementation("androidx.compose.foundation:foundation:1.6.7")
+    implementation("androidx.compose.material:material-icons-core:1.6.7")
+    implementation("io.coil-kt:coil-compose:2.2.0")
+    implementation("io.coil-kt:coil-svg:2.2.0")
+    implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+
+    implementation("dev.icerock.moko:resources-android:0.24.0-beta-4")
+    implementation("dev.icerock.moko:resources:0.24.0-beta-4")
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
