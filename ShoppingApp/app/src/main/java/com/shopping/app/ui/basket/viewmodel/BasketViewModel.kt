@@ -1,5 +1,7 @@
 package com.shopping.app.ui.basket.viewmodel
 
+import ai.mealz.core.subscription.publisher.BasketPublisher
+import ai.mealz.core.subscription.subscriber.BasketSubscriber
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +10,12 @@ import com.shopping.app.data.model.DataState
 import com.shopping.app.data.model.ProductBasket
 import com.shopping.app.data.repository.basket.BasketRepository
 
-class BasketViewModel(private val basketRepository: BasketRepository) : ViewModel() {
+
+/**
+ * TODO (Step 9): Implement the BasketPublisher, BasketSubscriber interface.
+ * https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#basket-synchronization-setup
+ */
+class BasketViewModel(private val basketRepository: BasketRepository) :  ViewModel() {
 
     private var _basketTotalLiveData = MutableLiveData<Double>()
     val basketTotalLiveData: LiveData<Double>

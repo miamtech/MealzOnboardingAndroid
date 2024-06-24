@@ -7,4 +7,9 @@ class ProductBasket(
     var image: String? = "",
     var price: Double? = 0.0,
     var piece: Int? = 0
-)
+) {
+    /**
+     * TODO (Step 8): Implement the toSupplierProduct method
+     * https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#basket-synchronization-setup
+     */
+}
