@@ -49,7 +49,18 @@ class SplashFragment : Fragment() {
             delay(1000)
 
             if(FirebaseAuth.getInstance().currentUser != null && userPref.getEmail().isNotEmpty()){
-
+                /**
+                 * TODO (Step 6) : Pass user identifier to Mealz when logged in
+                 *  https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#user-setup
+                 */
+                if (userPref.getStoreId().isEmpty()) {
+                    findNavController().navigate(R.id.action_splashFragment_to_storeFragment)
+                    return@launch
+                }
+                /**
+                 * TODO (Step 7) :  Pass selected store to Mealz
+                 *  https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#store-setup
+                 */
                 findNavController().navigate(R.id.action_splashFragment_to_mainMenuFragment)
 
             }else{
