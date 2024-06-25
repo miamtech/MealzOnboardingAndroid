@@ -1,5 +1,6 @@
 package com.shopping.app.ui.auth.signup.viewmodel
 
+import ai.mealz.core.Mealz
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shopping.app.R
@@ -69,9 +70,10 @@ class SignUpViewModel(
             .addOnSuccessListener {
                 userLiveData.value = DataState.Success(user)
                  /**
-                 * TODO (Step 6) : Pass user identifier to Mealz when logged in
+                 * Step 6 : Pass user identifier to Mealz when logged in
                  * https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#user-setup
                  */
+                user.uid?.let { Mealz.user.updateUserId(it) }
             }
             .addOnFailureListener { e ->
                 userLiveData.value = DataState.Error(e.message!!)
