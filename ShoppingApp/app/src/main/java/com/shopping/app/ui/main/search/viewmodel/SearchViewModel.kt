@@ -154,7 +154,7 @@ class SearchViewModel(private val context: Context, private val searchRepository
 
                 CoroutineScope(Dispatchers.Main).launch {
                     val storeId = UserPref(context).getStoreId()
-                searchRepository.getProductsByCategory(storeId,query).enqueue(object: Callback<MealzProductWrapper>{
+                searchRepository.getProductsByCategory(query,storeId).enqueue(object: Callback<MealzProductWrapper>{
 
                     override fun onResponse(call: Call<MealzProductWrapper>, response: Response<MealzProductWrapper>) {
 
