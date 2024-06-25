@@ -1,5 +1,7 @@
 package com.shopping.app.data.model
 
+import ai.mealz.core.model.SupplierProduct
+
 class ProductBasket(
 
     var id: String? = "",
@@ -9,7 +11,15 @@ class ProductBasket(
     var piece: Int? = 0
 ) {
     /**
-     * TODO (Step 8): Implement the toSupplierProduct method
+     * Step 8: Implement the toSupplierProduct method
      * https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#basket-synchronization-setup
      */
+    fun toSupplierProduct(): SupplierProduct {
+        return SupplierProduct(
+            id = id!!.toString(),
+            quantity = piece!!,
+            name = title!!,
+            imageURL = image!!
+        )
+    }
 }

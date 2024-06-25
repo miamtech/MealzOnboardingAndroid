@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.shopping.app.R
+import com.shopping.app.data.api.ApiClient
 import com.shopping.app.data.repository.basket.BasketRepositoryImpl
+import com.shopping.app.data.repository.product.ProductRepositoryImpl
 import com.shopping.app.databinding.FragmentMainMenuBinding
 import com.shopping.app.ui.basket.BasketFragment
 import com.shopping.app.ui.basket.viewmodel.BasketViewModel
@@ -21,7 +23,10 @@ class MainMenuFragment : Fragment() {
     private lateinit var bnd: FragmentMainMenuBinding
     private val viewModel by viewModels<BasketViewModel> {
         BasketViewModelFactory(
-            BasketRepositoryImpl()
+            BasketRepositoryImpl(),
+            ProductRepositoryImpl(
+                ApiClient.getApiService()
+            )
         )
     }
 
@@ -46,7 +51,7 @@ class MainMenuFragment : Fragment() {
         val navHostFragment = childFragmentManager.findFragmentById(R.id.navHostFragmentContainer) as NavHostFragment
         NavigationUI.setupWithNavController(bnd.bottomNav, navHostFragment.navController)
 
-        navHostFragment.navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navHostFragment.navController.addOnDestinationChangedListener { _  , destination, _ ->
             bnd.isBottomNavVisible = destination.id != R.id.productDetailsFragment
         }
 
