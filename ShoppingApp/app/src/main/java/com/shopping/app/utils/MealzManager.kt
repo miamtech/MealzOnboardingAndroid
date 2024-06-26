@@ -25,6 +25,10 @@ object MealzManager {
                 key = supplierKey
                 context = applicationContext
             }
+            /**
+             * TODO (Step 10): Add subscriptions configuration
+             * https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#putting-it-all-together
+             */
         }
         isInitialized = true
     }
