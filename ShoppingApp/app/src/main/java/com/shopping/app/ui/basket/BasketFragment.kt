@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.shopping.app.R
+import com.shopping.app.data.api.ApiClient
 import com.shopping.app.data.model.DataState
 import com.shopping.app.data.model.ProductBasket
 import com.shopping.app.data.repository.basket.BasketRepositoryImpl
+import com.shopping.app.data.repository.product.ProductRepositoryImpl
 import com.shopping.app.databinding.FragmentBasketBinding
 import com.shopping.app.ui.basket.adapter.BasketProductsAdapter
 import com.shopping.app.ui.basket.viewmodel.BasketViewModel
@@ -28,7 +30,10 @@ class BasketFragment : BottomSheetDialogFragment(), ProductPieceUpdateListener {
     private lateinit var loadingProgressBar: LoadingProgressBar
     private val viewModel by viewModels<BasketViewModel> {
         BasketViewModelFactory(
-            BasketRepositoryImpl()
+            BasketRepositoryImpl(),
+            ProductRepositoryImpl(
+                ApiClient.getApiService()
+            )
         )
     }
 
@@ -135,9 +140,7 @@ class BasketFragment : BottomSheetDialogFragment(), ProductPieceUpdateListener {
     }
 
     fun clearTheBasket() {
-
         if(viewModel.basketList.isNotEmpty()){
-
             AlertDialog.Builder(requireContext())
                 .setMessage(resources.getString(R.string.clear_message))
                 .setPositiveButton(resources.getString(R.string.continue_)) { dialog, _ ->
@@ -152,11 +155,8 @@ class BasketFragment : BottomSheetDialogFragment(), ProductPieceUpdateListener {
             Toast.makeText(requireContext(), getString(R.string.basket_empty_message), Toast.LENGTH_SHORT).show()
         }
     }
-
     fun purchase() {
-
         if(viewModel.basketList.isNotEmpty()){
-
             AlertDialog.Builder(requireContext())
                 .setMessage(resources.getString(R.string.purchase_message))
                 .setPositiveButton(resources.getString(R.string.continue_)) { dialog, _ ->
