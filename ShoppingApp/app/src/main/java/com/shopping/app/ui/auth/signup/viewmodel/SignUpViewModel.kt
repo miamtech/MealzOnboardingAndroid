@@ -68,6 +68,10 @@ class SignUpViewModel(
         userRepository.userAddDatabase(user)
             .addOnSuccessListener {
                 userLiveData.value = DataState.Success(user)
+                 /**
+                 * TODO (Step 6) : Pass user identifier to Mealz when logged in
+                 * https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#user-setup
+                 */
             }
             .addOnFailureListener { e ->
                 userLiveData.value = DataState.Error(e.message!!)

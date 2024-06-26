@@ -35,12 +35,16 @@ class StoreAdapter(private val context: Context, private val storeList: List<Sto
     }
 
      fun goHome(store: Store) {
-        saveStore(store)
+         saveSelectedStore(store)
     }
 
-    private fun saveStore(store: Store){
+    private fun saveSelectedStore(store: Store){
         val userPref = UserPref(context)
         CoroutineScope(Dispatchers.Main).launch {
+            /**
+             * TODO (Step 7): Pass selected store to Mealz
+             * https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#store-setup
+             */
             userPref.setStoreId(store.id)
             userPref.setStoreName(store.name)
             navController.navigate(R.id.action_storeFragment_to_mainMenuFragment)

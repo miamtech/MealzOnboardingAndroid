@@ -69,6 +69,10 @@ class SignInViewModel(
 
                 user.username = value?.toObject(User::class.java)?.username
                 userLiveData.value = DataState.Success(user)
+                /**
+                 * TODO (Step 6) : Pass user identifier to Mealz when logged in
+                 * https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#user-setup
+                 */
 
             }else{
                 userLiveData.value = DataState.Error(error.message!!)
