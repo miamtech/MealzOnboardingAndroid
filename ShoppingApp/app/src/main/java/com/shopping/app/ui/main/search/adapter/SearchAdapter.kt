@@ -16,6 +16,10 @@ class SearchAdapter(
       private val productList: List<Product>
 ) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
+    /**
+     * TODO (STEP 13) : Add Mealz to you view
+     */
+
     private lateinit var binding: ItemProductSearchBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
