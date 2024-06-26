@@ -59,6 +59,8 @@
     <string name="product_reduce_message">Product reduced</string>
     <string name="product_increased_message">Product increased</string>
     <string name="product_deleted_message">Product deleted</string>
+    <string name="clear_message">You are about to clear your basket.</string>
+    <string name="clear_success_message">Basket has been cleared successfully.</string>
     <string name="purchase_message">Are you sure the payment will be received and your shopping will be completed.</string>
     <string name="purchase_success_message">Products purchased successfully.</string>
     <string name="basket_empty_message">Your basket is empty</string>

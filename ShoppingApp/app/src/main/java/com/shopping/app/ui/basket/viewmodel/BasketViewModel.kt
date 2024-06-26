@@ -121,9 +121,17 @@ class BasketViewModel(private val basketRepository: BasketRepository) : ViewMode
         basketList.forEach {
             deleteProduct(it)
         }
+        _basketLiveData.value = DataState.Success(emptyList())
+        _purchaseLiveData.value = DataState.Success(R.string.clear_success_message)
+    }
 
+    fun purchase(){
+
+        basketList.forEach {
+            deleteProduct(it)
+        }
+        _basketLiveData.value = DataState.Success(emptyList())
         _purchaseLiveData.value = DataState.Success(R.string.purchase_success_message)
-
     }
 
 }

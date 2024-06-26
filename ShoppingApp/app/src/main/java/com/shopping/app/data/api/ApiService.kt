@@ -22,4 +22,10 @@ interface ApiService {
         @Query("name") category: String,
         @Query("point_of_sale_id") pointOfSaleId: Int,
     ): Call<MealzProductWrapper>
+
+
+    @GET("items?point_of_sale_id=464")
+    fun getProductsById(
+        @Query("filter[ext_id]") productId: String,
+    ): Call<MealzProductWrapper>
 }

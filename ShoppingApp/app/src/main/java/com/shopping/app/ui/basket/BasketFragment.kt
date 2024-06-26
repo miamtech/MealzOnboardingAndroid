@@ -139,7 +139,7 @@ class BasketFragment : BottomSheetDialogFragment(), ProductPieceUpdateListener {
         if(viewModel.basketList.isNotEmpty()){
 
             AlertDialog.Builder(requireContext())
-                .setMessage(resources.getString(R.string.purchase_message))
+                .setMessage(resources.getString(R.string.clear_message))
                 .setPositiveButton(resources.getString(R.string.continue_)) { dialog, _ ->
                     dialog.cancel()
                     viewModel.clearTheBasket()
@@ -151,7 +151,25 @@ class BasketFragment : BottomSheetDialogFragment(), ProductPieceUpdateListener {
         }else{
             Toast.makeText(requireContext(), getString(R.string.basket_empty_message), Toast.LENGTH_SHORT).show()
         }
+    }
 
+    fun purchase() {
+
+        if(viewModel.basketList.isNotEmpty()){
+
+            AlertDialog.Builder(requireContext())
+                .setMessage(resources.getString(R.string.purchase_message))
+                .setPositiveButton(resources.getString(R.string.continue_)) { dialog, _ ->
+                    dialog.cancel()
+                    viewModel.purchase()
+                }.setNegativeButton(resources.getString(R.string.cancel)){ dialog, _ ->
+                    dialog.cancel()
+                }
+                .show()
+
+        }else{
+            Toast.makeText(requireContext(), getString(R.string.basket_empty_message), Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun increaseProduct(productBasket: ProductBasket) {

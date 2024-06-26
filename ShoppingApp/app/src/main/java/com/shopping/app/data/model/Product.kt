@@ -28,9 +28,9 @@ data class Product(
         return Gson().toJson(this)
     }
 
-    val id: Int
+    val id: String
         get() {
-            return this.stringId?.toInt() ?: 0
+            return this.attributes?.extId ?: "-1"
         }
 
     val image: String
@@ -52,6 +52,17 @@ data class Product(
         get() {
             return this.attributes?.unitPrice?.toDouble() ?: 0.0
         }
+
+    fun toBasketProduct(qty: Int?): ProductBasket {
+
+        return ProductBasket(
+            this.id,
+            this.title,
+            this.image,
+            this.price,
+            qty ?:  1
+        )
+    }
 
     // static json object
     companion object {
