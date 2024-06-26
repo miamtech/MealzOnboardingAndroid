@@ -1,5 +1,6 @@
 package com.shopping.app.ui.splash
 
+import ai.mealz.core.Mealz
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,21 +51,23 @@ class SplashFragment : Fragment() {
 
             if(FirebaseAuth.getInstance().currentUser != null && userPref.getEmail().isNotEmpty()){
                 /**
-                 * TODO (Step 6) : Pass user identifier to Mealz when logged in
+                 * Step 6 : Pass user identifier to Mealz when logged in
                  *  https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#user-setup
                  */
+                FirebaseAuth.getInstance().currentUser?.uid?.let { Mealz.user.updateUserId(it) }
                 if (userPref.getStoreId().isEmpty()) {
                     findNavController().navigate(R.id.action_splashFragment_to_storeFragment)
                     return@launch
                 }
                 /**
-                 * TODO (Step 7) :  Pass selected store to Mealz
+                 * Step 7 :  Pass selected store to Mealz
                  *  https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#store-setup
                  */
+                // /!\ IMPORTANT /!\ here we are working for the sake of demo with mealz api then we passe and internal id
+                //  you should use Mealz.user.setStoreId(store.id) with your own store id
+                Mealz.user.setStoreWithMealzId(userPref.getStoreId())
                 findNavController().navigate(R.id.action_splashFragment_to_mainMenuFragment)
-
             }else{
-
                 if(userPref.isFirstUsage()){
                     findNavController().navigate(R.id.action_splashFragment_to_onboardingFragment)
                 } else if (userPref.getStoreId().isNotEmpty()) {
@@ -72,12 +75,7 @@ class SplashFragment : Fragment() {
                 } else {
                     findNavController().navigate(R.id.action_splashFragment_to_storeFragment)
                 }
-
-
             }
-
         }
-
     }
-
 }

@@ -1,5 +1,6 @@
 package com.shopping.app.ui.store.adapter
 
+import ai.mealz.core.Mealz
 import android.content.Context
 
 import android.view.LayoutInflater
@@ -42,9 +43,12 @@ class StoreAdapter(private val context: Context, private val storeList: List<Sto
         val userPref = UserPref(context)
         CoroutineScope(Dispatchers.Main).launch {
             /**
-             * TODO (Step 7): Pass selected store to Mealz
+             * Step 7: Pass selected store to Mealz
              * https://miamtech.github.io/mealz-documentation/docs/android/overview/supplierInit#store-setup
              */
+            // /!\ IMPORTANT /!\ here we are working for the sake of demo with mealz api then we passe and internal id
+            //  you should use  Mealz.user.setStoreId(store.id) with your own store id
+            Mealz.user.setStoreWithMealzId(store.id)
             userPref.setStoreId(store.id)
             userPref.setStoreName(store.name)
             navController.navigate(R.id.action_storeFragment_to_mainMenuFragment)
