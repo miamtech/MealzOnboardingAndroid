@@ -56,8 +56,9 @@ object MealzManager {
                 // Add your subscription configuration here
         }
         /**
-         * TODO (Step 16) : init Template
+         * Step 16 : init Template
          */
+        MealzTemplateManger()
         LogHandler.logLevel = LogHandler.LogLevels.ALL_LOGS
         isInitialized = true
     }
